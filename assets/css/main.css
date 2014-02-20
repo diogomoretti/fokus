@@ -1,0 +1,7 @@
+body{background:url("../img/bg-city.png") center top no-repeat #333;padding:0;margin:0;font-family:'Arial',helvetica,sans-serif}
+#element{display:inline-block;margin:300px 0 0 400px;-webkit-box-shadow:0 0 0 9999px rgba(0,0,0,0.5);box-shadow:0 0 0 9999px rgba(0,0,0,0.5)}
+.fokus{background:rgba(0,0,0,0.5);position:absolute;left:0}
+.fokus-top{left:0;right:0;top:0}
+.fokus-left{left:0;bottom:0}
+.fokus-right{right:0;bottom:0}
+.fokus-bottom{right:0;bottom:0}
