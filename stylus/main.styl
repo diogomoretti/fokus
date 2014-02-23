@@ -7,9 +7,15 @@ body
 #element
   display: inline-block
   position: relative
-  margin: 300px 0 0 400px
+  margin: 550px 0 400px 400px
+  border: 2px solid red
+  color: black
+  padding: 10px
+  &:hover
+    border-color: blue
 
 .fokus-on
+  box-sizing: border-box
   &:after
     content: ' '
     width: 100%
@@ -25,7 +31,3 @@ body
   position: absolute
   left: 0
   z-index: 9999
-
-.fokus-element
-  position: absolute
-  background: rgba(red, .7)

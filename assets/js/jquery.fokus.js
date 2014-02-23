@@ -14,8 +14,15 @@
         // Create the defaults once
         var pluginName = 'fokus',
                 defaults = {
+                    body: $('body'),
                     navigatorWidth: $(window).width(),
-                    navigatorHeight: $(window).height()
+                    navigatorHeight: $(window).height(),
+                    overlay: 'fokus',
+                    overlayTop: 'fokus-top',
+                    overlayRight: 'fokus-right',
+                    overlayBottom: 'fokus-bottom',
+                    overlayLeft: 'fokus-left',
+                    overlayActive: 'fokus-on'
         };
 
         // The actual plugin constructor
@@ -36,7 +43,8 @@
 
                         // Get values    
                         var $el      = $( this.element ),
-                            settings = this.settings;
+                            settings = this.settings,
+                            _this = this;
 
                         // Place initialization logic here
                         // You already have access to the DOM element and
@@ -44,17 +52,78 @@
                         // and this.settings
                         // you can add more functions like the one below and
                         // call them like so: this.yourOtherFunction(this.element, this.settings).
-                        $el.text('Funciona');
-                        console.log('xD');
+                        $el.on('click', function () {
+                            $this = $(this);
+                            if ($this.hasClass(settings.overlayActive)) {
+                                $this.removeClass(settings.overlayActive);
+                                _this.destroyFocus(settings);
+                            }
+                            else {
+                                $this.addClass(settings.overlayActive);
+                                _this.makeFocus($this, settings);
+                            }
+                        });
                 },
 
-                makeFocus: function (el) {
-                        ctx = $el[0].getBoundingClientRect();
+                makeFocus: function (el, config) {
+                        ctx = el.offset();
+                        elementWidth = el.width();
+                        elementHeight = el.height();
+                        elementPaddingTop = parseFloat(el.css('padding-top'));
+                        elementPaddingRight = parseFloat(el.css('padding-right'));
+                        elementPaddingBottom = parseFloat(el.css('padding-bottom'));
+                        elementPaddingLeft = parseFloat(el.css('padding-left'));
 
-                        distanceTop = rect.top - 5;
-                        distanceLeft = rect.left - 5;
-                        distanceRight = rect.right + 5;
-                        distanceBottom = rect.bottom + 5;
+                        console.log(ctx.top, ctx.right, ctx.bottom, ctx.left);
+                        console.log('Padding Top:' + elementPaddingBottom)
+
+                        distanceTop = (ctx.top);
+                        distanceRight = (ctx.left + elementWidth + elementPaddingRight + elementPaddingLeft);
+                        distanceBottom = (ctx.top + elementHeight) + elementPaddingBottom;
+                        distanceLeft = (ctx.left) + elementPaddingLeft;
+
+                        distanceTopElement = ((distanceTop + elementHeight) + 5) + elementPaddingBottom;
+
+                        distanceElementToRight = config.navigatorWidth - distanceRight;
+                        distanceElementToBottom = config.body.height() - distanceTopElement;
+                        distanceBetweenLeftRight = config.navigatorWidth - (distanceElementToRight + distanceLeft);
+
+                        config.body.prepend('<div class="' + config.overlay + ' ' + config.overlayTop + '"/><div class="' + config.overlay + ' ' + config.overlayRight + '"/><div class="' + config.overlay + ' ' + config.overlayBottom + '"/><div class="' + config.overlay + ' ' + config.overlayLeft + '"/>');
+
+                        config.body.find('.' + config.overlayTop).css({
+                                                left: 0,
+                                                right: 0,
+                                                top: 0,
+                                                width: '100%',
+                                                height: distanceTop + 'px'
+                                            });
+                        config.body.find('.' + config.overlayRight).css({
+                                                right: 0,
+                                                width: distanceElementToRight + 'px',
+                                                top: distanceTop + 'px',
+                                                left: distanceRight + 'px',
+                                                height: (distanceElementToBottom + elementHeight + 5) + 'px'
+                                            });
+                        /*
+                        config.body.find('.' + config.overlayBottom).css({
+                                                top: (distanceTopElement + 5) + 'px',
+                                                left: distanceLeft + 'px',
+                                                right: distanceRight + 'px',
+                                                width: distanceBetweenLeftRight + 'px',
+                                                height: (distanceElementToBottom - 5) + 'px'
+                                            });
+                        config.body.find('.' + config.overlayLeft).css({
+                                                left: 0,
+                                                bottom: 0,
+                                                width: distanceLeft + 'px',
+                                                top: distanceTop + 'px',
+                                                height: (distanceElementToBottom + elementHeight + 5) + 'px'
+                                            });
+*/
+                },
+
+                destroyFocus: function (config) {
+                        config.body.find('.' + config.overlay).remove();
                 }
         };
 
