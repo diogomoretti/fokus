@@ -67,26 +67,30 @@
 
                 makeFocus: function (el, config) {
                         ctx = el.offset();
-                        elementWidth = el.width();
-                        elementHeight = el.height();
+            
                         elementPaddingTop = parseFloat(el.css('padding-top'));
                         elementPaddingRight = parseFloat(el.css('padding-right'));
                         elementPaddingBottom = parseFloat(el.css('padding-bottom'));
                         elementPaddingLeft = parseFloat(el.css('padding-left'));
 
-                        console.log(ctx.top, ctx.right, ctx.bottom, ctx.left);
-                        console.log('Padding Top:' + elementPaddingBottom)
+                        elementBorderTop = parseFloat(el.css('border-top'));
+                        elementBorderRight = parseFloat(el.css('border-right'));
+                        elementBorderBottom = parseFloat(el.css('border-bottom'));
+                        elementBorderLeft = parseFloat(el.css('border-left'));
 
-                        distanceTop = (ctx.top);
-                        distanceRight = (ctx.left + elementWidth + elementPaddingRight + elementPaddingLeft);
-                        distanceBottom = (ctx.top + elementHeight) + elementPaddingBottom;
-                        distanceLeft = (ctx.left) + elementPaddingLeft;
+                        elementWidth = el.width() + elementPaddingRight + elementPaddingLeft + elementBorderLeft + elementBorderRight;
+                        elementHeight = el.height() + elementPaddingTop + elementPaddingBottom + elementBorderTop + elementBorderBottom;
 
-                        distanceTopElement = ((distanceTop + elementHeight) + 5) + elementPaddingBottom;
+                        distanceTop = ctx.top;
+                        distanceRight = ctx.left + elementWidth;
+                        distanceBottom = ctx.top + elementHeight;
+                        distanceLeft = ctx.left;
 
-                        distanceElementToRight = config.navigatorWidth - distanceRight;
-                        distanceElementToBottom = config.body.height() - distanceTopElement;
-                        distanceBetweenLeftRight = config.navigatorWidth - (distanceElementToRight + distanceLeft);
+                        distanceTopElement = distanceTop + elementHeight;
+
+                        distanceElementEndToRight = config.navigatorWidth - distanceRight;
+                        distanceElementEndToBottom = config.body.height() - distanceTopElement;
+                        distanceBetweenLeftRight = config.navigatorWidth - (distanceElementEndToRight + distanceLeft);
 
                         config.body.prepend('<div class="' + config.overlay + ' ' + config.overlayTop + '"/><div class="' + config.overlay + ' ' + config.overlayRight + '"/><div class="' + config.overlay + ' ' + config.overlayBottom + '"/><div class="' + config.overlay + ' ' + config.overlayLeft + '"/>');
 
@@ -99,27 +103,25 @@
                                             });
                         config.body.find('.' + config.overlayRight).css({
                                                 right: 0,
-                                                width: distanceElementToRight + 'px',
+                                                width: distanceElementEndToRight + 'px',
                                                 top: distanceTop + 'px',
                                                 left: distanceRight + 'px',
-                                                height: (distanceElementToBottom + elementHeight + 5) + 'px'
+                                                height: (distanceElementEndToBottom + elementHeight) + 'px'
                                             });
-                        /*
                         config.body.find('.' + config.overlayBottom).css({
-                                                top: (distanceTopElement + 5) + 'px',
+                                                top: distanceTopElement + 'px',
                                                 left: distanceLeft + 'px',
                                                 right: distanceRight + 'px',
                                                 width: distanceBetweenLeftRight + 'px',
-                                                height: (distanceElementToBottom - 5) + 'px'
+                                                height: distanceElementEndToBottom + 'px'
                                             });
                         config.body.find('.' + config.overlayLeft).css({
                                                 left: 0,
                                                 bottom: 0,
                                                 width: distanceLeft + 'px',
                                                 top: distanceTop + 'px',
-                                                height: (distanceElementToBottom + elementHeight + 5) + 'px'
+                                                height: (distanceElementEndToBottom + elementHeight) + 'px'
                                             });
-*/
                 },
 
                 destroyFocus: function (config) {
