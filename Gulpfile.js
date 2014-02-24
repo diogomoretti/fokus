@@ -37,8 +37,7 @@ gulp.task('stylus', function () {
     gulp.src(paths.styles)
         .pipe(plumber())
         .pipe(stylus({
-            use: ['nib'], 
-            set: ['compress']
+            use: ['nib']
         }))
         .pipe(gulp.dest('./assets/css'))
         .pipe(connect.reload());

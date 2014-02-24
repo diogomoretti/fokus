@@ -1,2 +1,25 @@
-.fokus-on{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}
-.fokus{background:rgba(0,0,0,0.5);position:absolute;left:0;z-index:9999}
+.fokus-on {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.fokus-overlay {
+  background: rgba(0,0,0,0.8);
+  position: absolute;
+  left: 0;
+  z-index: 9999;
+}
+.fokus-tooltip {
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+}
+.fokus-target {
+  display: none;
+}
+.fokus-target > h1 {
+  color: #000;
+  font-family: "Arial", helvetica, sans-serif;
+  font-weight: bold;
+  letter-spacing: -1px;
+  font-size: 20px;
+}

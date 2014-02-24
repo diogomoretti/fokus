@@ -17,12 +17,13 @@
                     body: $('body'),
                     navigatorWidth: $(window).width(),
                     navigatorHeight: $(window).height(),
-                    overlay: 'fokus',
+                    overlay: 'fokus-overlay',
                     overlayTop: 'fokus-top',
                     overlayRight: 'fokus-right',
                     overlayBottom: 'fokus-bottom',
                     overlayLeft: 'fokus-left',
-                    overlayActive: 'fokus-on'
+                    overlayActive: 'fokus-on',
+                    fokusTarget: 'fokus-target'
         };
 
         // The actual plugin constructor
@@ -122,10 +123,30 @@
                                                 top: distanceTop + 'px',
                                                 height: (distanceElementEndToBottom + elementHeight) + 'px'
                                             });
+
+                        _this = this;
+
+                        //Verify if exists attr data-target
+                        fokusDataTarget = el.data('fokus-target'); 
+
+                        if(fokusDataTarget.length) {
+                            this.showTooltip(config, fokusDataTarget)
+                        }
+
+                        //Remove when click out of element
+                        $('.' + config.overlay).on('click', function () {
+                                $this.removeClass(config.overlayActive);
+                                _this.destroyFocus(config);
+                        });
+                },
+
+                showTooltip: function (config, target) {
+                        $('.' + config.fokusTarget + '[data-fokus-target="'+target+'"]').show();
                 },
 
                 destroyFocus: function (config) {
                         config.body.find('.' + config.overlay).remove();
+                        $('.' + config.fokusTarget).hide();
                 }
         };
 
