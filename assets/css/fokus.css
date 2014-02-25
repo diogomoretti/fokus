@@ -51,7 +51,7 @@
   left: -12px;
   border-right: 12px solid #fff;
 }
-.fokus-target-active > h1 {
+.fokus-target-active h1 {
   color: #000;
   font-family: "Arial", helvetica, sans-serif;
   font-weight: bold;
@@ -60,17 +60,17 @@
   line-height: 1.8em;
   margin: 0;
 }
-.fokus-target-active > p {
+.fokus-target-active p {
   color: #555;
   line-height: 1.8em;
   font-size: 12px;
   margin: 0 0 10px 0;
 }
-.fokus-target-active > p a {
+.fokus-target-active p a {
   color: #000;
   border-bottom: 1px solid #ccc;
   text-decoration: none;
 }
-.fokus-target-active > p a:hover {
+.fokus-target-active p a:hover {
   border-color: #333;
 }
