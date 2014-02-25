@@ -9,7 +9,7 @@
   background: rgba(0,0,0,0.8);
   position: absolute;
   left: 0;
-  z-index: 9998;
+  z-index: 9995;
 }
 .fokus-tooltip {
   -webkit-border-radius: 2px;
