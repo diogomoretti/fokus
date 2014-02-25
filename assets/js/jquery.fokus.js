@@ -53,7 +53,8 @@
                         // and this.settings
                         // you can add more functions like the one below and
                         // call them like so: this.yourOtherFunction(this.element, this.settings).
-                        $el.on('click', function () {
+                        $el.on('click', function (e) {
+                            e.preventDefault();
                             $this = $(this);
                             if ($this.hasClass(settings.overlayActive)) {
                                 $this.removeClass(settings.overlayActive);
@@ -127,7 +128,7 @@
                         _this = this;
 
                         //Verify if exists attr data-target
-                        fokusDataTarget = el.data('fokus-target'); 
+                        fokusDataTarget = el.data('fokus-target');
 
                         if(fokusDataTarget.length) {
                             this.showTooltip(config, fokusDataTarget)
