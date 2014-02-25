@@ -5,16 +5,50 @@
   background: rgba(black, .8)
   position: absolute
   left: 0
-  z-index: 9999
+  z-index: 9998
 
 .fokus-tooltip
   border-radius: 2px
 
 .fokus-target
   display: none
+
+.fokus-target-active
+  display: block
+  position: absolute
+  left: 50%
+  background: #fff
+  z-index: 9999
+  top: 100px
+  box-sizing: border-box
+  padding: 0 10px
+  max-width: 300px
+  &:before
+    content: ' '
+    position: absolute
+    top: 12px
+    width: 0 
+    height: 0
+    border-top: 12px solid transparent
+    border-bottom: 12px solid transparent
+  &.fokus-target-active-left
+    &:before
+      right: -12px
+      border-left: 12px solid #fff
+  &.fokus-target-active-right
+    &:before
+      left: -12px
+      border-right: 12px solid #fff
   > h1
     color: black
     font-family: "Arial", helvetica, sans-serif
     font-weight: bold
     letter-spacing: -1px
     font-size: 20px
+    line-height: 1.8em
+    margin: 0
+  > p
+    color: #555
+    line-height: 1.8em
+    font-size: 12px
+    margin: 0 0 10px 0

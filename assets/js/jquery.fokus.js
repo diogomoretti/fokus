@@ -23,7 +23,10 @@
                     overlayBottom: 'fokus-bottom',
                     overlayLeft: 'fokus-left',
                     overlayActive: 'fokus-on',
-                    fokusTarget: 'fokus-target'
+                    fokusTarget: 'fokus-target',
+                    fokusTargetActive: 'fokus-target-active',
+                    distanceTooltipToElement: 30,
+                    tooltipWidth: 300
         };
 
         // The actual plugin constructor
@@ -142,12 +145,22 @@
                 },
 
                 showTooltip: function (config, target) {
-                        $('.' + config.fokusTarget + '[data-fokus-target="'+target+'"]').show();
+
+                        sideClass = '';
+                        tooltipItem = $('.' + config.fokusTarget + '[data-fokus-target="'+target+'"]');
+
+                        tooltipItem.addClass(config.fokusTargetActive).css({top: distanceTop + 'px', width: config.tooltipWidth + 'px'});
+
+                        if ((distanceRight + config.tooltipWidth + config.distanceTooltipToElement + 20) > config.navigatorWidth) {
+                            tooltipItem.css({left: ((distanceLeft - config.distanceTooltipToElement) - config.tooltipWidth) + 'px'}).addClass('fokus-target-active-left');
+                        } else {
+                            tooltipItem.css({left: (distanceRight + config.distanceTooltipToElement) + 'px'}).addClass('fokus-target-active-right');
+                        }
                 },
 
                 destroyFocus: function (config) {
                         config.body.find('.' + config.overlay).remove();
-                        $('.' + config.fokusTarget).hide();
+                        $('.' + config.fokusTarget).removeClass(config.fokusTargetActive + ' fokus-target-active-right fokus-target-active-left');
                 }
         };
 
