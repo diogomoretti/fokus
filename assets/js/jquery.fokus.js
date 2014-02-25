@@ -23,7 +23,7 @@
                     overlayBottom: 'fokus-bottom',
                     overlayExtra: 'fokus-extra',
                     overlayLeft: 'fokus-left',
-                    overlayActive: 'fokus-on',
+                    overlayActive: 'fokus-item-on',
                     fokusTarget: 'fokus-target',
                     fokusTargetActive: 'fokus-target-active',
                     fokusBodyActive: 'fokus-body-active',
@@ -194,5 +194,4 @@
         };
 
 })( jQuery, window, document );
-
-$('.teste').fokus();
+$('.fokus-item').fokus();
