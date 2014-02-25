@@ -21,12 +21,14 @@
                     overlayTop: 'fokus-top',
                     overlayRight: 'fokus-right',
                     overlayBottom: 'fokus-bottom',
+                    overlayExtra: 'fokus-extra',
                     overlayLeft: 'fokus-left',
                     overlayActive: 'fokus-on',
                     fokusTarget: 'fokus-target',
                     fokusTargetActive: 'fokus-target-active',
+                    fokusBodyActive: 'fokus-body-active',
                     distanceTooltipToElement: 30,
-                    tooltipWidth: 300
+                    tooltipWidth: 350
         };
 
         // The actual plugin constructor
@@ -57,13 +59,14 @@
                         // you can add more functions like the one below and
                         // call them like so: this.yourOtherFunction(this.element, this.settings).
                         $el.on('click', function (e) {
+                            
                             e.preventDefault();
                             $this = $(this);
+
                             if ($this.hasClass(settings.overlayActive)) {
                                 $this.removeClass(settings.overlayActive);
                                 _this.destroyFocus(settings);
-                            }
-                            else {
+                            } else {
                                 $this.addClass(settings.overlayActive);
                                 _this.makeFocus($this, settings);
                             }
@@ -71,6 +74,9 @@
                 },
 
                 makeFocus: function (el, config) {
+
+                        config.body.addClass(config.fokusBodyActive);
+
                         ctx = el.offset();
             
                         elementPaddingTop = parseFloat(el.css('padding-top'));
@@ -94,7 +100,7 @@
                         distanceTopElement = distanceTop + elementHeight;
 
                         distanceElementEndToRight = config.navigatorWidth - distanceRight;
-                        distanceElementEndToBottom = config.body.height() - distanceTopElement;
+                        distanceElementEndToBottom = config.navigatorHeight - distanceTopElement;
                         distanceBetweenLeftRight = config.navigatorWidth - (distanceElementEndToRight + distanceLeft);
 
                         config.body.prepend('<div class="' + config.overlay + ' ' + config.overlayTop + '"/><div class="' + config.overlay + ' ' + config.overlayRight + '"/><div class="' + config.overlay + ' ' + config.overlayBottom + '"/><div class="' + config.overlay + ' ' + config.overlayLeft + '"/>');
@@ -149,18 +155,28 @@
                         sideClass = '';
                         tooltipItem = $('.' + config.fokusTarget + '[data-fokus-target="'+target+'"]');
 
-                        tooltipItem.addClass(config.fokusTargetActive).css({top: distanceTop + 'px', width: config.tooltipWidth + 'px'});
+                        tooltipItem.addClass(config.fokusTargetActive).css({top: distanceTop + 'px', maxWidth: config.tooltipWidth + 'px'});
 
                         if ((distanceRight + config.tooltipWidth + config.distanceTooltipToElement + 20) > config.navigatorWidth) {
                             tooltipItem.css({left: ((distanceLeft - config.distanceTooltipToElement) - config.tooltipWidth) + 'px'}).addClass('fokus-target-active-left');
                         } else {
                             tooltipItem.css({left: (distanceRight + config.distanceTooltipToElement) + 'px'}).addClass('fokus-target-active-right');
                         }
+
+                        config.body.find('.' + config.overlayLeft).after('<div class="' + config.overlay + ' ' + config.overlayExtra + '"/>');
+
+                        $('.' + config.overlayExtra).css({
+                                left: 0,
+                                top: config.navigatorHeight + 'px',
+                                width: '100%',
+                                height: $(document).height() - config.navigatorHeight + 'px'
+                        })
                 },
 
                 destroyFocus: function (config) {
+                        config.body.removeClass(config.fokusBodyActive);
                         config.body.find('.' + config.overlay).remove();
-                        $('.' + config.fokusTarget).removeClass(config.fokusTargetActive + ' fokus-target-active-right fokus-target-active-left');
+                        $('.' + config.fokusTarget).removeClass(config.fokusTargetActive + ' fokus-target-active-right fokus-target-active-left').removeAttr('style');
                 }
         };
 

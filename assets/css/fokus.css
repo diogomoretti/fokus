@@ -1,3 +1,6 @@
+.fokus-body-active {
+  overflow-x: hidden;
+}
 .fokus-on {
   -webkit-box-shadow: 0 0 5px 2px rgba(0,0,0,0.8);
   box-shadow: 0 0 5px 2px rgba(0,0,0,0.8);
@@ -27,6 +30,9 @@
   box-sizing: border-box;
   padding: 0 10px;
   max-width: 300px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  margin-bottom: 10px;
 }
 .fokus-target-active:before {
   content: ' ';
@@ -59,4 +65,12 @@
   line-height: 1.8em;
   font-size: 12px;
   margin: 0 0 10px 0;
+}
+.fokus-target-active > p a {
+  color: #000;
+  border-bottom: 1px solid #ccc;
+  text-decoration: none;
+}
+.fokus-target-active > p a:hover {
+  border-color: #333;
 }
